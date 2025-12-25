@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const recentPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const title = '404 — Page Not Found | Neural Niki';
+const description = 'The page you are looking for does not exist.';
+---
+
+<Base {title} {description}>
+  <section class="container-blog min-h-[60vh] flex items-center justify-center py-16">
+    <div class="max-w-2xl mx-auto text-center">
+      <!-- 404 Graphic -->
+      <div class="mb-8">
+        <span class="text-8xl md:text-9xl font-bold gradient-text">404</span>
+      </div>
+      
+      <!-- Message -->
+      <h1 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">
+        Page not found
+      </h1>
+      <p class="text-lg mb-8" style="color: var(--text-tertiary);">
+        Looks like this page got lost in the digital void. 
+        The content you're looking for might have moved or doesn't exist.
+      </p>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="/" class="btn-primary px-8 py-3">
+          Go to Homepage
+        </a>
+        <a href="/posts" class="btn-secondary px-8 py-3">
+          Browse Articles
+        </a>
+      </div>
+      
+      <!-- Suggested Articles -->
+      {recentPosts.length > 0 && (
+        <div class="border-t pt-12" style="border-color: var(--border-primary);">
+          <h2 class="text-xl font-semibold mb-6" style="color: var(--text-primary);">
+            Maybe try one of these?
+          </h2>
+          
+          <div class="space-y-4 text-left">
+            {recentPosts.map(post => (
+              <a 
+                href={`/posts/${post.slug}`}
+                class="block p-4 rounded-lg border transition-all hover:shadow-md hover:-translate-y-0.5"
+                style="background-color: var(--bg-elevated); border-color: var(--border-primary);"
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-medium mb-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors" style="color: var(--text-primary);">
+                      {post.data.title}
+                    </h3>
+                    <p class="text-sm line-clamp-1" style="color: var(--text-tertiary);">
+                      {post.data.description}
+                    </p>
+                  </div>
+                  <svg class="w-5 h-5 flex-shrink-0 mt-1" style="color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

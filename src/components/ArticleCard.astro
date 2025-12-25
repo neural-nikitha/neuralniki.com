@@ -1,0 +1,212 @@
+---
+// ArticleCard.astro - Premium article card with glassmorphic effects and HCI-compliant design
+export interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  reading_time: number;
+  topic: string;
+  image?: string;
+  slug: string;
+  featured?: boolean;
+}
+
+const { title, description, date, reading_time, topic, image, slug, featured = false } = Astro.props;
+const href = `/posts/${slug}`;
+
+// Format date
+const formattedDate = date.toLocaleDateString('en-US', { 
+  month: 'short', 
+  day: 'numeric', 
+  year: 'numeric' 
+});
+
+// Topic-based gradient backgrounds for missing images
+const topicGradients: Record<string, string> = {
+  'Technology': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  'Investing': 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+  'AI': 'linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)',
+  'Product': 'linear-gradient(135deg, #F2994A 0%, #F2C94C 100%)',
+  'Finance': 'linear-gradient(135deg, #00B4DB 0%, #0083B0 100%)',
+};
+
+const placeholderGradient = topicGradients[topic] || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+
+// Topic badge styling
+const topicStyles: Record<string, { bg: string; text: string }> = {
+  'Technology': { bg: 'rgba(102, 126, 234, 0.15)', text: '#667eea' },
+  'Investing': { bg: 'rgba(17, 153, 142, 0.15)', text: '#11998e' },
+  'AI': { bg: 'rgba(142, 45, 226, 0.15)', text: '#8E2DE2' },
+  'Product': { bg: 'rgba(242, 153, 74, 0.15)', text: '#F2994A' },
+  'Finance': { bg: 'rgba(0, 180, 219, 0.15)', text: '#00B4DB' },
+};
+
+const style = topicStyles[topic] || { bg: 'rgba(107, 114, 128, 0.1)', text: '#6b7280' };
+---
+
+<article class:list={["group", featured && "md:col-span-2 lg:col-span-3"]}>
+  <a href={href} class="block h-full">
+    <div class="article-card relative flex flex-col h-full overflow-hidden rounded-2xl transition-all duration-500">
+      <!-- Image Section -->
+      <div class:list={[
+        "relative overflow-hidden",
+        featured ? "h-64 md:h-80" : "h-48 md:h-52"
+      ]}>
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <!-- Professional gradient placeholder with abstract pattern -->
+          <div 
+            class="w-full h-full relative"
+            style={`background: ${placeholderGradient};`}
+          >
+            <!-- Abstract geometric pattern overlay -->
+            <div class="absolute inset-0 opacity-20">
+              <svg class="w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <pattern id={`pattern-${slug}`} x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                    <circle cx="30" cy="30" r="1.5" fill="white" opacity="0.5"/>
+                    <path d="M0 30 L60 30 M30 0 L30 60" stroke="white" stroke-width="0.5" opacity="0.3"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill={`url(#pattern-${slug})`}/>
+              </svg>
+            </div>
+            <!-- Topic icon -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-white/30 text-6xl font-bold tracking-tighter select-none">
+                {topic.charAt(0)}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <!-- Topic Badge -->
+        <div class="absolute top-4 left-4">
+          <span 
+            class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide backdrop-blur-md shadow-sm"
+            style={`background-color: ${style.bg}; color: ${style.text}; border: 1px solid ${style.text}20;`}
+          >
+            {topic}
+          </span>
+        </div>
+        
+        <!-- Shine effect on hover -->
+        <div 
+          class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style="background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.1) 45%, transparent 50%);"
+        ></div>
+      </div>
+      
+      <!-- Content Section -->
+      <div class:list={[
+        "flex flex-col flex-grow",
+        featured ? "p-6 md:p-8" : "p-5 md:p-6"
+      ]}>
+        <!-- Title -->
+        <h2 
+          class:list={[
+            "font-semibold leading-snug mb-3 transition-colors",
+            featured ? "text-xl md:text-2xl" : "text-lg"
+          ]}
+          style="color: var(--text-primary); font-family: var(--font-sans);"
+        >
+          <span class="line-clamp-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+            {title}
+          </span>
+        </h2>
+        
+        <!-- Description -->
+        <p 
+          class:list={[
+            "line-clamp-2 mb-6 flex-grow leading-relaxed",
+            featured ? "text-base" : "text-sm"
+          ]}
+          style="color: var(--text-tertiary);"
+        >
+          {description}
+        </p>
+        
+        <!-- Footer Meta -->
+        <div 
+          class="flex items-center justify-between pt-4 border-t text-sm"
+          style="border-color: var(--border-secondary); color: var(--text-muted);"
+        >
+          <div class="flex items-center gap-4">
+            <time datetime={date.toISOString()} class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {formattedDate}
+            </time>
+            
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {reading_time} min
+            </span>
+          </div>
+          
+          <!-- Read Arrow -->
+          <span 
+            class="flex items-center gap-1.5 font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0"
+            style="color: var(--accent-primary);"
+          >
+            Read
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .article-card {
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .article-card:hover {
+    /* Glassmorphic effect on hover */
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 
+      0 8px 32px rgba(139, 92, 246, 0.15),
+      0 0 0 1px rgba(139, 92, 246, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-4px);
+    backdrop-filter: blur(8px);
+  }
+
+  :global(.dark) .article-card {
+    background-color: var(--bg-elevated);
+  }
+
+  :global(.dark) .article-card:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.95) 0%,
+      rgba(30, 41, 59, 0.8) 100%
+    );
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 
+      0 8px 32px rgba(139, 92, 246, 0.2),
+      0 0 0 1px rgba(139, 92, 246, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+</style>

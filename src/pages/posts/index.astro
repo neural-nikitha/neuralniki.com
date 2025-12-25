@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Pagination from '../../components/Pagination.astro';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// Get unique topics
+const topics = [...new Set(allPosts.map(post => post.data.topic))].sort();
+
+const title = 'Blog — All Articles | Neural Niki';
+const description = 'Browse all articles on technology, AI, investing, and digital culture.';
+---
+
+<Base {title} {description}>
+  <!-- Page Header -->
+  <section class="container-blog py-12 md:py-16 lg:py-20">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--text-primary);">
+        All Articles
+      </h1>
+      <p class="text-lg" style="color: var(--text-tertiary);">
+        Deep dives into technology, investing, AI, and the ideas shaping our digital future.
+        {sortedPosts.length} articles and counting.
+      </p>
+    </div>
+  </section>
+
+  <!-- Topic Filters -->
+  <section class="container-blog pb-8">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-sm font-medium mr-2" style="color: var(--text-muted);">Filter by topic:</span>
+      
+      <a 
+        href="/posts"
+        class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-purple-600 text-white"
+      >
+        All
+      </a>
+      
+      {topics.map(topic => (
+        <a 
+          href={`/posts?topic=${topic.toLowerCase()}`}
+          class="px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-gray-200 dark:hover:bg-gray-700"
+          style="background-color: var(--bg-tertiary); color: var(--text-secondary);"
+        >
+          {topic}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Articles Grid -->
+  <section class="container-blog pb-16 md:pb-24">
+    {sortedPosts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {sortedPosts.map((post) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.pubDate}
+            reading_time={post.data.reading_time}
+            topic={post.data.topic}
+            image={post.data.heroImage}
+            slug={post.slug}
+            featured={post.data.featured}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📝</div>
+        <h2 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">
+          No articles yet
+        </h2>
+        <p style="color: var(--text-tertiary);">
+          Check back soon for new content!
+        </p>
+      </div>
+    )}
+    
+    <!-- Pagination (for future use when you have many articles) -->
+    <Pagination currentPage={1} totalPages={1} />
+  </section>
+
+  <!-- Subscribe CTA -->
+  <section class="container-blog pb-16">
+    <div 
+      class="p-8 md:p-12 rounded-2xl text-center"
+      style="background-color: var(--bg-secondary); border: 1px solid var(--border-primary);"
+    >
+      <h2 class="text-2xl font-bold mb-3" style="color: var(--text-primary);">
+        Never miss an article
+      </h2>
+      <p class="mb-6 max-w-lg mx-auto" style="color: var(--text-tertiary);">
+        Get the latest posts delivered straight to your inbox. No spam, unsubscribe anytime.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="return false;">
+        <input 
+          type="email" 
+          placeholder="your@email.com"
+          class="flex-1 px-4 py-3 rounded-lg text-sm border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          style="background-color: var(--bg-primary); border-color: var(--border-primary); color: var(--text-primary);"
+        />
+        <button 
+          type="submit"
+          class="btn-primary px-6 py-3"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+</Base>

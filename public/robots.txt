@@ -1,0 +1,25 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://neuralniki.com/sitemap-index.xml
+
+# Block certain paths if needed
+Disallow: /api/
+Disallow: /_astro/
+
+# Googlebot specific
+User-agent: Googlebot
+Allow: /
+
+# Bingbot specific  
+User-agent: Bingbot
+Allow: /
+
+# Ad crawlers
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /

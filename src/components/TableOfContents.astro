@@ -1,0 +1,121 @@
+---
+// TableOfContents.astro - Auto-generated table of contents with active section highlighting
+export interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+
+// Filter to show only h2 and h3
+const tocItems = headings.filter(h => h.depth >= 2 && h.depth <= 3);
+---
+
+{tocItems.length > 0 && (
+  <nav 
+    class="toc hidden lg:block"
+    aria-label="Table of contents"
+  >
+    <div class="sticky top-24">
+      <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: var(--text-primary);">
+        On this page
+      </h3>
+      
+      <ul class="space-y-2 text-sm" id="toc-list">
+        {tocItems.map((heading) => (
+          <li 
+            class:list={[
+              heading.depth === 3 && 'ml-4'
+            ]}
+          >
+            <a 
+              href={`#${heading.slug}`}
+              class="toc-link block py-1 transition-colors border-l-2 pl-3 -ml-px"
+              style="color: var(--text-tertiary); border-color: transparent;"
+              data-heading={heading.slug}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}
+
+<style>
+  .toc-link:hover {
+    color: var(--accent-primary) !important;
+  }
+  
+  .toc-link.active {
+    color: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  function initTOC() {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    if (tocLinks.length === 0) return;
+    
+    const headings: Element[] = [];
+    
+    tocLinks.forEach(link => {
+      const slug = link.getAttribute('data-heading');
+      if (slug) {
+        const heading = document.getElementById(slug);
+        if (heading) headings.push(heading);
+      }
+    });
+    
+    if (headings.length === 0) return;
+    
+    function updateActiveHeading() {
+      const scrollY = window.scrollY;
+      const offset = 100; // Account for sticky header
+      
+      let activeHeading: Element | null = null;
+      
+      for (const heading of headings) {
+        const rect = heading.getBoundingClientRect();
+        const top = rect.top + scrollY - offset;
+        
+        if (scrollY >= top) {
+          activeHeading = heading;
+        }
+      }
+      
+      // Update active states
+      tocLinks.forEach(link => {
+        const slug = link.getAttribute('data-heading');
+        if (activeHeading && slug === activeHeading.id) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    
+    // Throttled scroll handler
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveHeading();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    
+    // Initial update
+    updateActiveHeading();
+  }
+  
+  // Initialize on load
+  initTOC();
+  
+  // Re-initialize after Astro page transitions
+  document.addEventListener('astro:after-swap', initTOC);
+</script>
