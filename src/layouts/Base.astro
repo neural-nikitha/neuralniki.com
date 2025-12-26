@@ -30,12 +30,14 @@ const ogImage = new URL(image, Astro.site);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- Theme flash prevention - MUST be first script -->
+  <!-- DEFAULT: Light mode. Dark mode only if explicitly set in localStorage -->
   <script is:inline>
     (function() {
       const theme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       
-      if (theme === 'dark' || (!theme && prefersDark)) {
+      // Only enable dark mode if explicitly saved as 'dark'
+      // Light mode is now the default (no system preference fallback)
+      if (theme === 'dark') {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');

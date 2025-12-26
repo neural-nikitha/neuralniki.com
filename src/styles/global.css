@@ -641,6 +641,26 @@
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
   }
+
+  /* === FEATURE FLAG UTILITIES === 
+     Use these to hide elements without deleting code.
+     Remove the class to re-enable the feature.
+  */
+
+  /* Hide subscription-related UI (forms, CTAs, badges) */
+  .hide-subscription {
+    display: none !important;
+  }
+
+  /* Hide stats block in hero section */
+  .hide-stats {
+    display: none !important;
+  }
+
+  /* Hide promotional elements (arrows, badges) */
+  .hide-promotional {
+    display: none !important;
+  }
 }
 
 /* === RESPONSIVE TYPOGRAPHY === */
