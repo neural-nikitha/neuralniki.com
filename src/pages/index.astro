@@ -8,7 +8,7 @@ const sortedPosts = allPosts.sort(
 );
 
 const title = 'Neural Niki';
-const description = 'A premium publication exploring AI, technology, investing, and startup economics.';
+const description = 'Business case studies and AI insights. Clear analysis, no fluff.';
 
 const featuredPost = sortedPosts[0];
 const recentPosts = sortedPosts.slice(1);
@@ -20,10 +20,10 @@ const recentPosts = sortedPosts.slice(1);
     <div class="container">
       <div style="max-width: 720px; margin: 0 auto; text-align: center;">
         <h1 style="margin: 0 0 1.5rem 0; font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -0.03em;">
-          Essays on AI, investing & technology
+          Business Case Studies & AI
         </h1>
         <p style="margin: 0; font-size: 1.25rem; color: var(--text-tertiary); line-height: 1.7;">
-          Thoughtful analysis without the hype. Deep dives into artificial intelligence, startup economics, and the forces shaping our digital future.
+          Clear analysis, no fluff. Deep dives into what makes companies succeed (or fail) and the AI reshaping our world.
         </p>
       </div>
     </div>
@@ -130,13 +130,4 @@ const recentPosts = sortedPosts.slice(1);
       </div>
     </section>
   )}
-
-  <!-- AdSense Ready Slot -->
-  <section class="py-section">
-    <div class="container">
-      <div class="ad-slot ad-slot-horizontal">
-        Advertisement
-      </div>
-    </div>
-  </section>
 </Base>

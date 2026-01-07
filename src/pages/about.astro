@@ -2,61 +2,82 @@
 import Base from '../layouts/Base.astro';
 
 const title = 'About Neural Niki';
-const description = 'Thoughtful perspectives on AI, technology, investing, and the forces shaping our digital future.';
+const description = 'Business case studies and AI insights. Clear analysis, no fluff.';
 ---
 
 <Base {title} {description}>
-  <!-- Simple Hero Section -->
-  <section class="py-section">
+  <!-- About Page -->
+  <section style="padding: 4rem 0 5rem;">
     <div class="container">
-      <div class="max-w-3xl mx-auto text-center">
+      <div style="max-width: 640px; margin: 0 auto; text-align: center;">
+        
+        <!-- Decorative Element -->
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; margin-bottom: 1.5rem; border-radius: 1rem; background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 127, 199, 0.15));">
+          <span style="font-size: 1.5rem;">✦</span>
+        </div>
+        
         <!-- Heading -->
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8" style="color: var(--text-primary); letter-spacing: -0.03em;">
+        <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; color: var(--text-primary); letter-spacing: -0.03em; margin-bottom: 1rem;">
           About Neural Niki
         </h1>
         
         <!-- Subtitle -->
-        <p class="text-xl md:text-2xl mb-12" style="color: var(--text-tertiary); line-height: 1.6;">
-          Thoughtful perspectives on AI, technology, investing, and the forces shaping our digital future.
+        <p style="font-size: 1.125rem; color: var(--text-tertiary); line-height: 1.7; margin-bottom: 2.5rem;">
+          Business case studies and AI insights.<br/>Clear analysis, no fluff.
         </p>
         
+        <!-- Divider -->
+        <div style="width: 60px; height: 3px; margin: 0 auto 2.5rem; border-radius: 2px; background: linear-gradient(90deg, var(--color-purple), var(--color-lavender));"></div>
+        
         <!-- Main Content -->
-        <div class="prose mx-auto text-left">
-          <p>
-            In an era of clickbait headlines and shallow analysis, Neural Niki offers something different: <strong>long-form, well-researched articles</strong> that respect your intelligence and time.
+        <div style="text-align: left;">
+          <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+            In an era of clickbait headlines and shallow analysis, Neural Niki offers something different: <strong style="color: var(--text-primary);">well-researched articles</strong> that respect your intelligence and time.
           </p>
           
-          <p>
-            I write about the stories behind the headlines — from ambitious startup failures to the hidden mechanics of platforms you use every day. My goal is to help you understand not just <em>what</em> is happening in tech, but <em>why</em> it matters.
+          <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 2rem;">
+            I write about the stories behind the headlines — from ambitious startup failures to the hidden mechanics of platforms you use every day. My goal is to help you understand not just <em>what</em> is happening, but <em>why</em> it matters.
           </p>
           
-          <h2>What I Cover</h2>
-          <ul>
-            <li><strong>AI & Machine Learning</strong> — Separating genuine innovation from marketing hype</li>
-            <li><strong>Startups & Business</strong> — The real stories behind unicorns and failures</li>
-            <li><strong>Investing & Finance</strong> — Psychology, strategies, and market dynamics</li>
-            <li><strong>Technology & Culture</strong> — How digital systems shape society</li>
-          </ul>
+          <!-- Focus Areas -->
+          <div style="background: var(--bg-secondary); border-radius: 0.75rem; padding: 1.5rem 1.75rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
+            <h2 style="font-size: 0.875rem; font-weight: 600; color: var(--color-purple); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">
+              What I Cover
+            </h2>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
+              <li style="display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9375rem; color: var(--text-secondary);">
+                <span style="color: var(--color-lavender);">→</span>
+                <span><strong style="color: var(--text-primary);">AI & Machine Learning</strong> — Separating innovation from hype</span>
+              </li>
+              <li style="display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9375rem; color: var(--text-secondary);">
+                <span style="color: var(--color-lavender);">→</span>
+                <span><strong style="color: var(--text-primary);">Business Case Studies</strong> — The real stories behind successes and failures</span>
+              </li>
+            </ul>
+          </div>
           
-          <h2>Editorial Standards</h2>
-          <p>
-            Every article is thoroughly researched and fact-checked. I never accept payment for coverage or reviews. When I make mistakes, I correct them transparently.
-          </p>
-          
-          <p>
-            All opinions expressed here are my own and do not represent any employer or organization.
+          <p style="font-size: 0.9375rem; color: var(--text-tertiary); line-height: 1.7; margin-bottom: 0;">
+            Every article is thoroughly researched. I never accept payment for coverage. All opinions are my own.
           </p>
         </div>
         
         <!-- CTA -->
-        <div class="mt-12 pt-8 border-t" style="border-color: var(--border-color);">
-          <p class="mb-6" style="color: var(--text-tertiary);">
-            Want to connect or suggest a story?
-          </p>
-          <a href="/contact" class="btn btn-primary">
-            Get in Touch
-          </a>
+        <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+            <a href="/contact" class="btn btn-primary">
+              Get in Touch
+            </a>
+            <a 
+              href="https://medium.com/@neuralnikitha" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="btn btn-secondary"
+            >
+              Read on Medium
+            </a>
+          </div>
         </div>
+        
       </div>
     </div>
   </section>

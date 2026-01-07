@@ -16,25 +16,39 @@ const legalLinks = [
 ---
 
 <footer class="mt-auto" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color);">
-  <div class="container py-12">
-    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-      <!-- Brand -->
-      <div>
-        <a href="/" class="text-lg font-bold" style="color: var(--text-primary);">
+  <div class="container" style="padding-top: 3rem; padding-bottom: 2rem;">
+    <!-- Main Footer Content -->
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      
+      <!-- Brand & Description -->
+      <div style="text-align: center;">
+        <a href="/" style="display: inline-block; font-size: 1.25rem; font-weight: 700; color: var(--text-primary); text-decoration: none; margin-bottom: 1rem;">
           NEURAL NIKI
         </a>
-        <p class="mt-2 text-sm max-w-xs" style="color: var(--text-tertiary);">
-          Thoughtful perspectives on AI, technology, and the forces shaping our digital future.
+        <p style="max-width: 400px; margin: 0.75rem auto 0; font-size: 0.875rem; color: var(--text-tertiary); line-height: 1.6;">
+          Business case studies and AI insights. Clear analysis, no fluff.
         </p>
+        
+        <!-- Medium Link -->
+        <a 
+          href="https://medium.com/@neuralnikitha" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style="display: inline-flex; align-items: center; gap: 0.375rem; margin-top: 1rem; font-size: 0.8125rem; color: var(--accent-primary); text-decoration: none;"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+          </svg>
+          Follow on Medium
+        </a>
       </div>
       
       <!-- Navigation -->
-      <nav class="flex flex-wrap gap-x-8 gap-y-2">
+      <nav style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem;">
         {navLinks.map(link => (
           <a 
             href={link.href}
-            class="text-sm transition-colors"
-            style="color: var(--text-tertiary);"
+            style="font-size: 0.875rem; color: var(--text-tertiary); text-decoration: none; transition: color 0.15s ease;"
           >
             {link.label}
           </a>
@@ -43,22 +57,21 @@ const legalLinks = [
     </div>
     
     <!-- Bottom Bar -->
-    <div class="mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style="border-top: 1px solid var(--border-color);">
-      <p class="text-sm" style="color: var(--text-muted);">
-        © {currentYear} Neural Niki. All rights reserved.
-      </p>
-      
-      <nav class="flex flex-wrap gap-x-6 gap-y-2">
+    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+      <nav style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem;">
         {legalLinks.map(link => (
           <a 
             href={link.href}
-            class="text-sm transition-colors"
-            style="color: var(--text-muted);"
+            style="font-size: 0.75rem; color: var(--text-muted); text-decoration: none;"
           >
             {link.label}
           </a>
         ))}
       </nav>
+      
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">
+        © {currentYear} Neural Niki
+      </p>
     </div>
   </div>
 </footer>

@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 
 export interface Props {
   title: string;
@@ -31,6 +32,9 @@ const formattedDate = pubDate?.toLocaleDateString('en-US', {
 ---
 
 <Base title={`${title} | Neural Niki`} description={description} image={image} article={true} publishedTime={pubDate}>
+  <!-- Reading Progress Bar -->
+  <ReadingProgress />
+
   <article itemscope itemtype="https://schema.org/Article">
     <!-- Hero Image Banner -->
     {image && (
@@ -70,13 +74,6 @@ const formattedDate = pubDate?.toLocaleDateString('en-US', {
     <!-- Article Body -->
     <div class="prose" style="padding: 2.5rem 1.5rem;">
       <slot />
-    </div>
-
-    <!-- In-Article Ad Slot -->
-    <div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem;">
-      <div class="ad-slot ad-slot-in-article">
-        Advertisement
-      </div>
     </div>
 
     <!-- Article Footer -->
