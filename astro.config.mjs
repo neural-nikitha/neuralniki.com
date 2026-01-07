@@ -4,7 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://neuralniki.com',
+  site: 'https://neural-nikitha.github.io',
+  base: '/neuralniki.com/',
   
   // GitHub Pages configuration
   // For GitHub Pages, deploy to neuralniki.github.io with custom domain

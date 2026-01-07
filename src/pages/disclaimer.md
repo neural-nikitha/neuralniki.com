@@ -93,7 +93,7 @@ We may update this disclaimer at any time. Check this page periodically for chan
 
 If you have questions about this disclaimer:
 
-- **Email**: [hello@neuralniki.com](mailto:hello@neuralniki.com)
+- **Email**: [neuralniki@gmail.com](mailto:neuralniki@gmail.com)
 
 ---
 
