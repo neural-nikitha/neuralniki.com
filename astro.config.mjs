@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://neural-nikitha.github.io',
   base: '/neuralniki.com/',
-  
+  outDir: 'docs', 
   // GitHub Pages configuration
   // For GitHub Pages, deploy to neuralniki.github.io with custom domain
   // No base path needed when using custom domain
