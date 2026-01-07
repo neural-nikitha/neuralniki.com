@@ -13,6 +13,8 @@ export interface Props {
   author?: string;
 }
 
+const base = import.meta.env.BASE_URL;
+
 const {
   title,
   description,
@@ -24,6 +26,9 @@ const {
   author = 'Neural Niki'
 } = Astro.props;
 
+// Prepend base URL to image if it starts with /
+const imageUrl = image ? (image.startsWith('/') ? `${base}${image.slice(1)}` : image) : undefined;
+
 const formattedDate = pubDate?.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -31,15 +36,15 @@ const formattedDate = pubDate?.toLocaleDateString('en-US', {
 });
 ---
 
-<Base title={`${title} | Neural Niki`} description={description} image={image} article={true} publishedTime={pubDate}>
+<Base title={`${title} | Neural Niki`} description={description} image={imageUrl} article={true} publishedTime={pubDate}>
   <!-- Reading Progress Bar -->
   <ReadingProgress />
 
   <article itemscope itemtype="https://schema.org/Article">
     <!-- Hero Image Banner -->
-    {image && (
+    {imageUrl && (
       <div class="hero-banner">
-        <img src={image} alt={title} />
+        <img src={imageUrl} alt={title} />
         <div class="hero-banner-overlay"></div>
       </div>
     )}

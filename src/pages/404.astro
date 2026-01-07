@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
+const base = import.meta.env.BASE_URL;
+
 const recentPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
@@ -29,10 +31,10 @@ const description = 'The page you are looking for does not exist.';
       
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-        <a href="/" class="btn-primary px-8 py-3">
+        <a href={base} class="btn-primary px-8 py-3">
           Go to Homepage
         </a>
-        <a href="/posts" class="btn-secondary px-8 py-3">
+        <a href={`${base}posts`} class="btn-secondary px-8 py-3">
           Browse Articles
         </a>
       </div>
@@ -47,7 +49,7 @@ const description = 'The page you are looking for does not exist.';
           <div class="space-y-4 text-left">
             {recentPosts.map(post => (
               <a 
-                href={`/posts/${post.slug}`}
+                href={`${base}posts/${post.slug}`}
                 class="block p-4 rounded-lg border transition-all hover:shadow-md hover:-translate-y-0.5"
                 style="background-color: var(--bg-elevated); border-color: var(--border-primary);"
               >

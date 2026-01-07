@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 
+const base = import.meta.env.BASE_URL;
+
 const allPosts = await getCollection('blog');
 const sortedPosts = allPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -36,10 +38,10 @@ const description = 'Business case studies and AI insights. Clear analysis, no f
       ) : (
         <div class="grid-2">
           {sortedPosts.map((post) => (
-            <a href={`/posts/${post.slug}`} class="article-card" style="text-decoration: none;">
+            <a href={`${base}posts/${post.slug}`} class="article-card" style="text-decoration: none;">
               {post.data.heroImage && (
                 <div class="article-card-image">
-                  <img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+                  <img src={`${base}${post.data.heroImage.replace(/^\//, '')}`} alt={post.data.title} loading="lazy" />
                 </div>
               )}
               

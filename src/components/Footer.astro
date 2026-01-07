@@ -1,17 +1,18 @@
 ---
 const currentYear = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/posts', label: 'Articles' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: base, label: 'Home' },
+  { href: `${base}posts`, label: 'Articles' },
+  { href: `${base}about`, label: 'About' },
+  { href: `${base}contact`, label: 'Contact' },
 ];
 
 const legalLinks = [
-  { href: '/privacy-policy', label: 'Privacy' },
-  { href: '/terms', label: 'Terms' },
-  { href: '/disclaimer', label: 'Disclaimer' },
+  { href: `${base}privacy-policy`, label: 'Privacy' },
+  { href: `${base}terms`, label: 'Terms' },
+  { href: `${base}disclaimer`, label: 'Disclaimer' },
 ];
 ---
 
@@ -22,7 +23,7 @@ const legalLinks = [
       
       <!-- Brand & Description -->
       <div style="text-align: center;">
-        <a href="/" style="display: inline-block; font-size: 1.25rem; font-weight: 700; color: var(--text-primary); text-decoration: none; margin-bottom: 1rem;">
+        <a href={base} style="display: inline-block; font-size: 1.25rem; font-weight: 700; color: var(--text-primary); text-decoration: none; margin-bottom: 1rem;">
           NEURAL NIKI
         </a>
         <p style="max-width: 400px; margin: 0.75rem auto 0; font-size: 0.875rem; color: var(--text-tertiary); line-height: 1.6;">
