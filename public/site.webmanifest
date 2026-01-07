@@ -1,0 +1,8 @@
+{
+  "name": "neuralniki",
+  "description": "A minimal blog exploring AI, technology, and investing",
+  "homepage": "https://neuralniki.com",
+  "keywords": ["ai", "technology", "investing", "startup", "blog"],
+  "author": "Neural Niki",
+  "license": "MIT"
+}

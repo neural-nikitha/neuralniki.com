@@ -1,231 +1,498 @@
 ---
 import Base from './Base.astro';
-import TableOfContents from '../components/TableOfContents.astro';
-import AdSlot from '../components/AdSlot.astro';
 import SharePill from '../components/SharePill.astro';
-import ReadingProgress from '../components/ReadingProgress.astro';
 
 export interface Props {
   title: string;
   description: string;
-  date?: Date;
+  pubDate?: Date;
   reading_time?: number;
   topic?: string;
   tags?: string[];
   image?: string;
-  headings?: { depth: number; slug: string; text: string }[];
+  heroImage?: string;
+  author?: string;
 }
 
 const {
   title,
   description,
-  date,
+  pubDate,
   reading_time = 5,
   topic = 'Technology',
   tags = [],
   image,
-  headings = []
+  heroImage,
+  author = 'Neural Niki'
 } = Astro.props;
 
-const slug = Astro.url.pathname.split('/posts/')[1]?.replace(/\/$/, '') || '';
-const formattedDate = date?.toLocaleDateString('en-US', {
+const formattedDate = pubDate?.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
 
-// Topic color mapping
-const topicColors: Record<string, string> = {
-  'Technology': 'text-blue-600 dark:text-blue-400',
-  'Investing': 'text-green-600 dark:text-green-400',
-  'AI': 'text-purple-600 dark:text-purple-400',
-  'Product': 'text-amber-600 dark:text-amber-400',
-  'Finance': 'text-cyan-600 dark:text-cyan-400',
-};
+const slug = Astro.url.pathname.split('/posts/')[1]?.replace(/\/$/, '') || '';
 ---
 
-<Base title={`${title} | Neural Niki`} description={description} image={image} article={true} publishedTime={date}>
-  <ReadingProgress />
-  
-  <article class="relative" itemscope itemtype="https://schema.org/Article">
-    <!-- Article Header -->
-    <header class="container-blog py-12 md:py-16 lg:py-20">
-      <div class="max-w-3xl mx-auto text-center">
-        <!-- Topic Badge -->
-        {topic && (
-          <div class="mb-6">
-            <span class:list={[
-              "inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold",
-              topicColors[topic] || 'text-gray-600'
-            ]} style="background-color: var(--bg-tertiary);">
-              {topic}
-            </span>
-          </div>
-        )}
-        
-        <!-- Title -->
-        <h1 
-          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance"
-          style="color: var(--text-primary);"
-          itemprop="headline"
-        >
-          {title}
-        </h1>
-        
-        <!-- Description -->
-        <p 
-          class="text-lg md:text-xl mb-8 max-w-2xl mx-auto"
-          style="color: var(--text-tertiary);"
-          itemprop="description"
-        >
-          {description}
-        </p>
-        
-        <!-- Meta Info -->
-        <div class="flex flex-wrap items-center justify-center gap-4 text-sm" style="color: var(--text-muted);">
-          {date && (
-            <time datetime={date.toISOString()} itemprop="datePublished" class="flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {formattedDate}
-            </time>
-          )}
-          
-          <span class="hidden sm:inline">•</span>
-          
-          <span class="flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {reading_time} min read
-          </span>
-        </div>
-        
-        <!-- Tags -->
-        {tags.length > 0 && (
-          <div class="flex flex-wrap justify-center gap-2 mt-6">
-            {tags.map((tag) => (
-              <span 
-                class="px-3 py-1 rounded-full text-xs font-medium"
-                style="background-color: var(--bg-tertiary); color: var(--text-secondary);"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </header>
-    
+<Base title={`${title} | Neural Niki`} description={description} image={image} article={true} publishedTime={pubDate}>
+  <article class="article-container" itemscope itemtype="https://schema.org/Article">
     <!-- Hero Image -->
-    {image && (
-      <div class="container-blog mb-12">
-        <div class="max-w-4xl mx-auto">
-          <figure class="relative rounded-2xl overflow-hidden shadow-xl">
-            <img
-              src={image}
-              alt={title}
-              class="w-full h-auto"
-              loading="eager"
-              itemprop="image"
-            />
-          </figure>
-        </div>
+    {heroImage && (
+      <div class="article-hero-section">
+        <img src={heroImage} alt={title} class="article-hero-image" itemprop="image" />
       </div>
     )}
-    
-    <!-- Main Content Grid -->
-    <div class="container-blog">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+
+    <!-- Article Header -->
+    <header class="article-header">
+      <div class="header-content">
+        <h1 class="article-title" itemprop="headline">{title}</h1>
         
-        <!-- Left Sidebar - Share Actions (Desktop) -->
-        <aside class="hidden lg:block lg:col-span-1">
-          <div class="sticky top-24 flex flex-col items-center gap-4">
-            <SharePill slug={slug} title={title} />
-          </div>
-        </aside>
-        
-        <!-- Main Article Content -->
-        <div class="lg:col-span-8">
-          <!-- First Ad Slot - After intro (optional) -->
-          <!-- <AdSlot type="in-article" className="mb-8" /> -->
-          
-          <!-- Article Body -->
-          <div 
-            class="prose prose-lg prose-slate dark:prose-invert max-w-none prose-blog"
-            itemprop="articleBody"
-          >
-            <slot />
+        <p class="article-description" itemprop="description">{description}</p>
+
+        <!-- Meta Information -->
+        <div class="article-meta">
+          <div class="meta-left">
+            <time datetime={pubDate?.toISOString()} itemprop="datePublished" class="publish-date">
+              {formattedDate}
+            </time>
+            <span class="reading-time">
+              {reading_time} min read
+            </span>
           </div>
           
-          <!-- End of Article Ad -->
-          <AdSlot type="after-content" className="mt-12" />
-          
-          <!-- Article Footer -->
-          <footer class="mt-12 pt-8 border-t" style="border-color: var(--border-primary);">
-            <!-- Tags Repeat -->
-            {tags.length > 0 && (
-              <div class="mb-8">
-                <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: var(--text-primary);">
-                  Topics
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <span 
-                      class="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-purple-50 dark:hover:bg-purple-900/30"
-                      style="background-color: var(--bg-tertiary); color: var(--text-secondary);"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            <!-- Share Section -->
-            <div class="flex items-center justify-between">
-              <p class="text-sm" style="color: var(--text-muted);">
-                Thanks for reading! Share this article if you found it valuable.
-              </p>
-              <div class="lg:hidden">
-                <SharePill slug={slug} title={title} />
-              </div>
-            </div>
-          </footer>
+          {topic && (
+            <span class="topic-badge">{topic}</span>
+          )}
         </div>
-        
-        <!-- Right Sidebar - TOC (Desktop) -->
-        <aside class="hidden lg:block lg:col-span-3">
-          <div class="sticky top-24 space-y-8">
-            <TableOfContents headings={headings} />
-            
-            <!-- Sidebar Ad -->
-            <AdSlot type="sidebar" />
-          </div>
-        </aside>
       </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body prose-wrapper">
+      <slot />
     </div>
-    
-    <!-- Continue Reading Section -->
-    <section class="container-blog py-16 md:py-24 mt-16 border-t" style="border-color: var(--border-primary);">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color: var(--text-primary);">
-          Continue Reading
-        </h2>
-        <p class="mb-8" style="color: var(--text-tertiary);">
-          Explore more articles on similar topics.
-        </p>
-        <a 
-          href="/posts"
-          class="btn-primary inline-flex items-center gap-2"
-        >
-          View All Articles
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </a>
+
+    <!-- Article Footer -->
+    <footer class="article-footer">
+      <div class="footer-content">
+        <div class="author-section">
+          <h3 class="author-name">{author}</h3>
+          <p class="author-bio">AI researcher & tech writer exploring the intersection of technology, economics, and human behavior.</p>
+        </div>
+
+        {tags && tags.length > 0 && (
+          <div class="tags-section">
+            <div class="tags-list">
+              {tags.map((tag) => (
+                <a href={`/posts?tag=${tag.toLowerCase()}`} class="tag">
+                  {tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-    </section>
+    </footer>
+
+    <!-- Share Section -->
+    <SharePill title={title} />
   </article>
 </Base>
+
+<style is:global>
+  /* Article Container - Maximum readability width */
+  .article-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Article Hero Section */
+  .article-hero-section {
+    margin: -1.5rem -1.5rem 3rem -1.5rem;
+    width: calc(100% + 3rem);
+    max-height: 600px;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .article-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    margin: 0;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .article-hero-section {
+      margin: -1rem -1rem 2rem -1rem;
+      width: calc(100% + 2rem);
+      max-height: 400px;
+    }
+  }
+
+  /* Article Header */
+  .article-header {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border-color, #e5e5e5);
+  }
+
+  .header-content {
+    max-width: 100%;
+  }
+
+  .article-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    color: var(--text-primary, #000);
+    letter-spacing: -0.5px;
+  }
+
+  .article-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-secondary, #666);
+    margin: 0 0 2rem 0;
+    font-weight: 400;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--text-tertiary, #999);
+    font-size: 0.95rem;
+  }
+
+  .meta-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .publish-date {
+    font-weight: 500;
+  }
+
+  .publish-date::after {
+    content: "•";
+    margin-left: 0.75rem;
+  }
+
+  .reading-time {
+    color: var(--text-tertiary, #999);
+  }
+
+  .topic-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-tertiary, #f5f5f5);
+    color: var(--text-primary, #000);
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Article Body - Prose Styling */
+  .article-body {
+    padding: 3rem 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary, #000);
+  }
+
+  .prose-wrapper h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1.25rem 0;
+    line-height: 1.3;
+    color: var(--text-primary, #000);
+    letter-spacing: -0.3px;
+  }
+
+  .prose-wrapper h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem 0;
+    line-height: 1.4;
+    color: var(--text-primary, #000);
+  }
+
+  .prose-wrapper p {
+    margin: 1.5rem 0;
+    color: var(--text-primary, #000);
+  }
+
+  .prose-wrapper a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .prose-wrapper a:hover {
+    border-bottom-color: #0066cc;
+    background-color: rgba(0, 102, 204, 0.05);
+  }
+
+  .prose-wrapper ul,
+  .prose-wrapper ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+  }
+
+  .prose-wrapper li {
+    margin: 0.75rem 0;
+    line-height: 1.8;
+  }
+
+  .prose-wrapper blockquote {
+    border-left: 4px solid var(--border-color, #e5e5e5);
+    padding: 1rem 0 1rem 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--text-secondary, #666);
+    background-color: var(--bg-secondary, #fafafa);
+  }
+
+  .prose-wrapper code {
+    background-color: var(--bg-secondary, #f5f5f5);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 0.95em;
+    color: var(--text-primary, #000);
+  }
+
+  .prose-wrapper pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+
+  .prose-wrapper pre code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    border: 1px solid var(--border-color, #e5e5e5);
+  }
+
+  .prose-wrapper th,
+  .prose-wrapper td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color, #e5e5e5);
+  }
+
+  .prose-wrapper th {
+    background-color: var(--bg-tertiary, #f5f5f5);
+    font-weight: 600;
+  }
+
+  .prose-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem 0;
+    display: block;
+  }
+
+  /* Article Footer */
+  .article-footer {
+    padding: 3rem 0;
+    border-top: 1px solid var(--border-color, #e5e5e5);
+    border-bottom: 1px solid var(--border-color, #e5e5e5);
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .author-section {
+    padding: 0;
+  }
+
+  .author-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary, #000);
+  }
+
+  .author-bio {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary, #666);
+    margin: 0;
+  }
+
+  .tags-section {
+    padding-top: 1rem;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-tertiary, #f5f5f5);
+    color: var(--text-secondary, #666);
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color, #e5e5e5);
+  }
+
+  .tag:hover {
+    background-color: var(--text-primary, #000);
+    color: var(--bg-primary, #fff);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .article-container {
+      padding: 0 1rem;
+    }
+
+    .article-header {
+      padding: 2.5rem 0 2rem;
+    }
+
+    .article-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .article-description {
+      font-size: 1.1rem;
+    }
+
+    .article-body {
+      padding: 2rem 0;
+      font-size: 1rem;
+    }
+
+    .prose-wrapper h2 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem 0;
+    }
+
+    .prose-wrapper h3 {
+      font-size: 1.25rem;
+      margin: 1.5rem 0 0.75rem 0;
+    }
+
+    .article-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .meta-left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .publish-date::after {
+      content: "";
+      margin-left: 0;
+    }
+
+    .article-footer {
+      padding: 2rem 0;
+    }
+  }
+
+  /* Dark Mode Support */
+  :root.dark .article-title,
+  :root.dark .article-body,
+  :root.dark .author-name,
+  :root.dark .prose-wrapper h2,
+  :root.dark .prose-wrapper h3 {
+    color: #ffffff;
+  }
+
+  :root.dark .article-description,
+  :root.dark .author-bio,
+  :root.dark .prose-wrapper a,
+  :root.dark .tag {
+    color: #d0d0d0;
+  }
+
+  :root.dark .article-header,
+  :root.dark .article-footer {
+    border-color: #333333;
+  }
+
+  :root.dark .article-body {
+    color: #e0e0e0;
+  }
+
+  :root.dark .prose-wrapper blockquote {
+    background-color: #1a1a1a;
+    border-left-color: #444444;
+    color: #b0b0b0;
+  }
+
+  :root.dark .prose-wrapper code {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+  }
+
+  :root.dark .prose-wrapper table {
+    border-color: #333333;
+  }
+
+  :root.dark .prose-wrapper th {
+    background-color: #1a1a1a;
+  }
+
+  :root.dark .prose-wrapper th,
+  :root.dark .prose-wrapper td {
+    border-color: #333333;
+  }
+
+  :root.dark .topic-badge {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+
+  :root.dark .tag {
+    background-color: #1a1a1a;
+    border-color: #333333;
+  }
+
+  :root.dark .tag:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+</style>

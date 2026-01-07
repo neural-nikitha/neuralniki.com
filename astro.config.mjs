@@ -4,21 +4,25 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  // Update this when you have your custom domain
   site: 'https://neuralniki.com',
   
-  // Enable MDX and Sitemap integrations
+  // GitHub Pages configuration
+  // For GitHub Pages, deploy to neuralniki.github.io with custom domain
+  // No base path needed when using custom domain
+  
   integrations: [
     mdx(),
-    sitemap(),
+    sitemap({
+      lastmod: new Date(),
+      changefreq: 'weekly',
+      priority: 0.8,
+    }),
   ],
 
-  // Vite configuration for Tailwind
   vite: {
     plugins: [tailwindcss()]
   },
 
-  // Markdown configuration
   markdown: {
     shikiConfig: {
       theme: 'github-dark',
@@ -26,9 +30,7 @@ export default defineConfig({
     }
   },
 
-  // Build configuration
   build: {
-    // Inline small assets
     inlineStylesheets: 'auto'
   }
 });

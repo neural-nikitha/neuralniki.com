@@ -1,10 +1,14 @@
-The $3 Trillion AI Bubble: Why Investment Is Surging While Productivity Stalls
-NeuralNikitha
-NeuralNikitha
-4 min read
-·
-Nov 25, 2025
-46
+---
+title: "The $3 Trillion AI Bubble: Why Investment Is Surging While Productivity Stalls"
+description: "Companies are spending record amounts on data centers and chips, but productivity gains remain elusive. Exploring whether the AI boom is a sustainable revolution or an unsustainable bubble."
+pubDate: 2025-11-25
+author: "NeuralNiki"
+featured: true
+tags: ["AI", "Economics", "Investing", "Tech", "Bubble"]
+heroImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cdefs%3E%3ClinearGradient id='grad2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231a1f2e;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%230f1419;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='600' fill='url(%23grad2)'/%3E%3Ccircle cx='600' cy='300' r='200' fill='%232563eb' opacity='0.1'/%3E%3Ccircle cx='300' cy='150' r='80' fill='%23d4af37' opacity='0.15'/%3E%3Cpath d='M 200 400 Q 400 200 600 350 T 1000 400' fill='none' stroke='%23e8c854' stroke-width='3' opacity='0.4'/%3E%3Ctext x='600' y='300' font-size='64' font-weight='bold' text-anchor='middle' fill='%232563eb'%3E$3 Trillion%3C/text%3E%3Ctext x='600' y='370' font-size='36' text-anchor='middle' fill='%23d4af37'%3EAI Bubble%3C/text%3E%3Ctext x='600' y='430' font-size='24' text-anchor='middle' fill='%23b0b8c8'%3EInvestment vs Productivity%3C/text%3E%3C/svg%3E"
+topic: "Investing"
+reading_time: 6
+---
 
 
 
