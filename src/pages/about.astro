@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 
+const base = import.meta.env.BASE_URL;
 const title = 'About Neural Niki';
 const description = 'Business case studies and AI insights. Clear analysis, no fluff.';
 ---
@@ -64,7 +65,7 @@ const description = 'Business case studies and AI insights. Clear analysis, no f
         <!-- CTA -->
         <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
           <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-            <a href="/contact" class="btn btn-primary">
+            <a href={`${base}contact`} class="btn btn-primary">
               Get in Touch
             </a>
             <a 

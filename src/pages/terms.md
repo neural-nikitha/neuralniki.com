@@ -105,7 +105,7 @@ If any provision of these Terms is found to be unenforceable, the remaining prov
 
 For questions about these Terms, please contact us:
 
-- **Email**: [hello@neuralniki.com](mailto:hello@neuralniki.com)
+- **Email**: [neuralniki@gmail.com](mailto:neuralniki@gmail.com)
 - **Website**: [Contact Page](/contact)
 
 ---
