@@ -13,12 +13,14 @@ const description = 'Read all published articles on AI, technology, and investin
 
 <Base {title} {description}>
   <!-- Page Header -->
-  <section class="py-hero" style="border-bottom: var(--border-light);">
+  <section class="py-section" style="background: var(--bg-secondary);">
     <div class="container">
-      <div class="article-container" style="text-align: center;">
-        <h1 style="margin: 0 0 1rem 0;">All Articles</h1>
-        <p style="margin: 0; font-size: 1.1rem; color: var(--text-secondary);">
-          {sortedPosts.length} {sortedPosts.length === 1 ? 'article' : 'articles'} • Deep dives into AI, investing, and technology
+      <div style="max-width: 720px;">
+        <h1 style="margin: 0 0 1rem 0; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.03em;">
+          All Articles
+        </h1>
+        <p style="margin: 0; color: var(--text-tertiary); font-size: 1.125rem; line-height: 1.6;">
+          {sortedPosts.length} {sortedPosts.length === 1 ? 'article' : 'articles'} on AI, technology, investing, and more.
         </p>
       </div>
     </div>
@@ -28,27 +30,25 @@ const description = 'Read all published articles on AI, technology, and investin
   <section class="py-section">
     <div class="container">
       {sortedPosts.length === 0 ? (
-        <div style="text-align: center; padding: 4rem 2rem;">
-          <p style="color: var(--text-secondary); font-size: 1.1rem;">
-            No posts published yet.
-          </p>
-        </div>
+        <p style="text-align: center; color: var(--text-tertiary); font-size: 1.1rem;">
+          No posts published yet.
+        </p>
       ) : (
-        <div class="grid-3">
+        <div class="grid-2">
           {sortedPosts.map((post) => (
             <a href={`/posts/${post.slug}`} class="article-card" style="text-decoration: none;">
               {post.data.heroImage && (
                 <div class="article-card-image">
-                  <img src={post.data.heroImage} alt={post.data.title} />
+                  <img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
                 </div>
               )}
               
               <div class="article-card-content">
                 <div class="article-card-meta">
-                  <span class="badge" style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.8rem;">
+                  <span class="badge">
                     {post.data.topic}
                   </span>
-                  <span style="color: var(--text-tertiary); font-size: 0.9rem;">
+                  <span style="color: var(--text-tertiary); font-size: 0.875rem;">
                     {post.data.reading_time} min
                   </span>
                 </div>
@@ -69,7 +69,7 @@ const description = 'Read all published articles on AI, technology, and investin
                       day: 'numeric',
                     })}
                   </time>
-                  <div class="article-card-read" style="margin-top: 1rem;">
+                  <div class="article-card-read">
                     Read Article →
                   </div>
                 </div>
@@ -81,9 +81,3 @@ const description = 'Read all published articles on AI, technology, and investin
     </div>
   </section>
 </Base>
-
-<style is:global>
-  a:hover {
-    color: var(--accent-hover) !important;
-  }
-</style>

@@ -2,329 +2,62 @@
 import Base from '../layouts/Base.astro';
 
 const title = 'About Neural Niki';
-const description = 'Learn about the author and mission behind this tech blog focused on AI, investing, and software architecture.';
-
-const stats = [
-  { value: '15+', label: 'Years Experience' },
-  { value: '100+', label: 'Articles Written' },
-  { value: '50K+', label: 'Readers Helped' },
-  { value: '5', label: 'Topic Areas' },
-];
-
-const topics = [
-  { icon: '🤖', name: 'AI & ML', description: 'Actual capabilities vs. hype' },
-  { icon: '💻', name: 'Architecture', description: 'How systems scale' },
-  { icon: '📈', name: 'Investing', description: 'Markets & strategies' },
-  { icon: '💰', name: 'Finance', description: 'Building wealth' },
-  { icon: '📱', name: 'Digital Culture', description: 'Tech meets society' },
-];
-
-const timeline = [
-  { year: '2010', title: 'Started in Tech', desc: 'First engineering role at a startup' },
-  { year: '2014', title: 'Went Enterprise', desc: 'Joined Fortune 500, learned scale' },
-  { year: '2018', title: 'Architecture Lead', desc: 'Designing systems for millions' },
-  { year: '2022', title: 'Started Writing', desc: 'Sharing knowledge publicly' },
-  { year: '2025', title: 'Neural Niki', desc: 'Launched this publication' },
-];
+const description = 'Thoughtful perspectives on AI, technology, investing, and the forces shaping our digital future.';
 ---
 
 <Base {title} {description}>
-  <!-- Premium Hero Section with Glassmorphism -->
-  <section class="about-hero py-hero">
+  <!-- Simple Hero Section -->
+  <section class="py-section">
     <div class="container">
-      <div class="glass-container about-hero-content">
-        <!-- Intro -->
-        <div class="about-intro">
-          <div class="badge mb-6">
-            👋 Welcome to Neural Niki
-          </div>
+      <div class="max-w-3xl mx-auto text-center">
+        <!-- Heading -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8" style="color: var(--text-primary); letter-spacing: -0.03em;">
+          About Neural Niki
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="text-xl md:text-2xl mb-12" style="color: var(--text-tertiary); line-height: 1.6;">
+          Thoughtful perspectives on AI, technology, investing, and the forces shaping our digital future.
+        </p>
+        
+        <!-- Main Content -->
+        <div class="prose mx-auto text-left">
+          <p>
+            In an era of clickbait headlines and shallow analysis, Neural Niki offers something different: <strong>long-form, well-researched articles</strong> that respect your intelligence and time.
+          </p>
           
-          <h1 class="about-title">
-            Deep dives into <span class="text-accent">technology, investing, and human behavior</span>
-          </h1>
+          <p>
+            I write about the stories behind the headlines — from ambitious startup failures to the hidden mechanics of platforms you use every day. My goal is to help you understand not just <em>what</em> is happening in tech, but <em>why</em> it matters.
+          </p>
           
-          <p class="about-subtitle">
-            I write about AI, startups, and markets without the hype. Straight analysis. No clickbait.
+          <h2>What I Cover</h2>
+          <ul>
+            <li><strong>AI & Machine Learning</strong> — Separating genuine innovation from marketing hype</li>
+            <li><strong>Startups & Business</strong> — The real stories behind unicorns and failures</li>
+            <li><strong>Investing & Finance</strong> — Psychology, strategies, and market dynamics</li>
+            <li><strong>Technology & Culture</strong> — How digital systems shape society</li>
+          </ul>
+          
+          <h2>Editorial Standards</h2>
+          <p>
+            Every article is thoroughly researched and fact-checked. I never accept payment for coverage or reviews. When I make mistakes, I correct them transparently.
+          </p>
+          
+          <p>
+            All opinions expressed here are my own and do not represent any employer or organization.
           </p>
         </div>
-
-        <!-- Stats -->
-        <div class="about-stats grid-3">
-          {stats.map((stat) => (
-            <div class="stat-card">
-              <div class="stat-value">{stat.value}</div>
-              <div class="stat-label">{stat.label}</div>
-            </div>
-          ))}
+        
+        <!-- CTA -->
+        <div class="mt-12 pt-8 border-t" style="border-color: var(--border-color);">
+          <p class="mb-6" style="color: var(--text-tertiary);">
+            Want to connect or suggest a story?
+          </p>
+          <a href="/contact" class="btn btn-primary">
+            Get in Touch
+          </a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Topics Section -->
-  <section class="py-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>What I Write About</h2>
-        <p>Five areas of deep expertise and curious investigation</p>
-      </div>
-
-      <div class="grid-3">
-        {topics.map((topic) => (
-          <div class="card topic-card">
-            <div class="topic-icon">{topic.icon}</div>
-            <h3>{topic.name}</h3>
-            <p>{topic.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Timeline Section -->
-  <section class="py-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>My Journey</h2>
-        <p>From engineering to architecture to writing</p>
-      </div>
-
-      <div class="timeline">
-        {timeline.map((item, index) => (
-          <div class="timeline-item">
-            <div class="timeline-marker">
-              <div class="timeline-dot"></div>
-              {index < timeline.length - 1 && <div class="timeline-line"></div>}
-            </div>
-            <div class="timeline-content">
-              <div class="timeline-year">{item.year}</div>
-              <h4>{item.title}</h4>
-              <p>{item.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="py-section">
-    <div class="container">
-      <div class="glass-container cta-content">
-        <h2>Ready to dive in?</h2>
-        <p>Start with my latest articles or explore by topic</p>
-        <div class="cta-buttons">
-          <a href="/posts" class="btn btn-primary">Read Articles</a>
-          <a href="#" class="btn btn-secondary">Subscribe</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Styles -->
-  <style is:global>
-    /* About Page Specific Styles */
-    .about-hero {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .about-hero-content {
-      text-align: center;
-    }
-
-    .about-intro {
-      margin-bottom: 3rem;
-    }
-
-    .about-title {
-      font-size: clamp(2.5rem, 7vw, 4rem);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-
-    .text-accent {
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .about-subtitle {
-      font-size: 1.25rem;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-
-    .about-stats {
-      margin-top: 3rem;
-      padding-top: 3rem;
-      border-top: var(--border-light);
-    }
-
-    .stat-card {
-      text-align: center;
-      padding: 1.5rem;
-    }
-
-    .stat-value {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--accent-primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Section Headers */
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .section-header h2 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-header p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-    }
-
-    /* Topic Cards */
-    .topic-card {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .topic-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .topic-card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .topic-card p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    /* Timeline */
-    .timeline {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .timeline-item {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .timeline-marker {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 60px;
-      flex-shrink: 0;
-    }
-
-    .timeline-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: var(--accent-primary);
-      border: 3px solid var(--secondary-bg);
-      margin-top: 6px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .timeline-line {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: calc(100% + 2rem);
-      background: linear-gradient(to bottom, var(--accent-primary), transparent);
-    }
-
-    .timeline-content {
-      padding-top: 2px;
-      flex-grow: 1;
-    }
-
-    .timeline-year {
-      font-weight: 700;
-      color: var(--accent-primary);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem;
-    }
-
-    .timeline-content h4 {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
-      color: var(--text-primary);
-    }
-
-    .timeline-content p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin: 0.5rem 0 0 0;
-    }
-
-    /* CTA Section */
-    .cta-content {
-      text-align: center;
-      padding: 3rem 2rem;
-    }
-
-    .cta-content h2 {
-      font-size: clamp(1.75rem, 5vw, 2.5rem);
-      margin-bottom: 1rem;
-    }
-
-    .cta-content p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-    }
-
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 768px) {
-      .about-stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .cta-buttons {
-        flex-direction: column;
-      }
-
-      .cta-buttons .btn {
-        width: 100%;
-      }
-    }
-  </style>
 </Base>

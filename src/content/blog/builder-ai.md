@@ -5,7 +5,7 @@ pubDate: 2025-06-02
 author: "NeuralNiki"
 featured: true
 tags: ["AI", "Startups", "Fraud", "Case Study", "Business"]
-heroImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%230f1419;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%231a1f2e;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='600' fill='url(%23grad1)'/%3E%3Ccircle cx='200' cy='150' r='100' fill='%23d4af37' opacity='0.1'/%3E%3Ccircle cx='1000' cy='450' r='150' fill='%232563eb' opacity='0.08'/%3E%3Crect x='100' y='200' width='1000' height='300' fill='none' stroke='%23d4af37' stroke-width='2' opacity='0.3' rx='20'/%3E%3Ctext x='600' y='350' font-size='72' font-weight='bold' text-anchor='middle' fill='%23d4af37'%3EThe $450M Lie%3C/text%3E%3Ctext x='600' y='420' font-size='32' text-anchor='middle' fill='%23b0b8c8'%3EBuilder.ai Fraud Case Study%3C/text%3E%3C/svg%3E"
+heroImage: "/images/blog/builder-ai-collapse-unicorn-startup.gif"
 topic: "AI"
 reading_time: 8
 ---

@@ -1,6 +1,5 @@
 ---
 import Base from './Base.astro';
-import SharePill from '../components/SharePill.astro';
 
 export interface Props {
   title: string;
@@ -10,7 +9,6 @@ export interface Props {
   topic?: string;
   tags?: string[];
   image?: string;
-  heroImage?: string;
   author?: string;
 }
 
@@ -22,7 +20,6 @@ const {
   topic = 'Technology',
   tags = [],
   image,
-  heroImage,
   author = 'Neural Niki'
 } = Astro.props;
 
@@ -31,468 +28,79 @@ const formattedDate = pubDate?.toLocaleDateString('en-US', {
   month: 'long',
   day: 'numeric',
 });
-
-const slug = Astro.url.pathname.split('/posts/')[1]?.replace(/\/$/, '') || '';
 ---
 
 <Base title={`${title} | Neural Niki`} description={description} image={image} article={true} publishedTime={pubDate}>
-  <article class="article-container" itemscope itemtype="https://schema.org/Article">
-    <!-- Hero Image -->
-    {heroImage && (
-      <div class="article-hero-section">
-        <img src={heroImage} alt={title} class="article-hero-image" itemprop="image" />
+  <article itemscope itemtype="https://schema.org/Article">
+    <!-- Hero Image Banner -->
+    {image && (
+      <div class="hero-banner">
+        <img src={image} alt={title} />
+        <div class="hero-banner-overlay"></div>
       </div>
     )}
 
     <!-- Article Header -->
-    <header class="article-header">
-      <div class="header-content">
-        <h1 class="article-title" itemprop="headline">{title}</h1>
-        
-        <p class="article-description" itemprop="description">{description}</p>
-
-        <!-- Meta Information -->
-        <div class="article-meta">
-          <div class="meta-left">
-            <time datetime={pubDate?.toISOString()} itemprop="datePublished" class="publish-date">
-              {formattedDate}
-            </time>
-            <span class="reading-time">
-              {reading_time} min read
-            </span>
-          </div>
-          
-          {topic && (
-            <span class="topic-badge">{topic}</span>
-          )}
-        </div>
+    <header style="max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 0;">
+      {topic && (
+        <span class="badge" style="margin-bottom: 1rem;">
+          {topic}
+        </span>
+      )}
+      
+      <h1 itemprop="headline" style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; margin: 0 0 1.5rem 0; letter-spacing: -0.03em;">
+        {title}
+      </h1>
+      
+      <p itemprop="description" style="font-size: 1.25rem; line-height: 1.6; color: var(--text-tertiary); margin: 0 0 2rem 0;">
+        {description}
+      </p>
+      
+      <div style="display: flex; align-items: center; gap: 1rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color);">
+        <time datetime={pubDate?.toISOString()} itemprop="datePublished" style="font-size: 0.9rem; color: var(--text-tertiary); font-weight: 500;">
+          {formattedDate}
+        </time>
+        <span style="color: var(--text-muted);">·</span>
+        <span style="font-size: 0.9rem; color: var(--text-tertiary);">
+          {reading_time} min read
+        </span>
       </div>
     </header>
 
     <!-- Article Body -->
-    <div class="article-body prose-wrapper">
+    <div class="prose" style="padding: 2.5rem 1.5rem;">
       <slot />
     </div>
 
-    <!-- Article Footer -->
-    <footer class="article-footer">
-      <div class="footer-content">
-        <div class="author-section">
-          <h3 class="author-name">{author}</h3>
-          <p class="author-bio">AI researcher & tech writer exploring the intersection of technology, economics, and human behavior.</p>
-        </div>
+    <!-- In-Article Ad Slot -->
+    <div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem;">
+      <div class="ad-slot ad-slot-in-article">
+        Advertisement
+      </div>
+    </div>
 
+    <!-- Article Footer -->
+    <footer style="max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; border-top: 1px solid var(--border-color);">
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0 0 0.5rem 0;">
+            Written by
+          </p>
+          <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0;">
+            {author}
+          </h3>
+        </div>
+        
         {tags && tags.length > 0 && (
-          <div class="tags-section">
-            <div class="tags-list">
-              {tags.map((tag) => (
-                <a href={`/posts?tag=${tag.toLowerCase()}`} class="tag">
-                  {tag}
-                </a>
-              ))}
-            </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            {tags.map((tag) => (
+              <span class="badge">
+                {tag}
+              </span>
+            ))}
           </div>
         )}
       </div>
     </footer>
-
-    <!-- Share Section -->
-    <SharePill title={title} />
   </article>
 </Base>
-
-<style is:global>
-  /* Article Container - Maximum readability width */
-  .article-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  /* Article Hero Section */
-  .article-hero-section {
-    margin: -1.5rem -1.5rem 3rem -1.5rem;
-    width: calc(100% + 3rem);
-    max-height: 600px;
-    overflow: hidden;
-    border-radius: 16px;
-  }
-
-  .article-hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    margin: 0;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  }
-
-  @media (max-width: 768px) {
-    .article-hero-section {
-      margin: -1rem -1rem 2rem -1rem;
-      width: calc(100% + 2rem);
-      max-height: 400px;
-    }
-  }
-
-  /* Article Header */
-  .article-header {
-    padding: 4rem 0 3rem;
-    border-bottom: 1px solid var(--border-color, #e5e5e5);
-  }
-
-  .header-content {
-    max-width: 100%;
-  }
-
-  .article-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 0 0 1.5rem 0;
-    color: var(--text-primary, #000);
-    letter-spacing: -0.5px;
-  }
-
-  .article-description {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: var(--text-secondary, #666);
-    margin: 0 0 2rem 0;
-    font-weight: 400;
-  }
-
-  .article-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    color: var(--text-tertiary, #999);
-    font-size: 0.95rem;
-  }
-
-  .meta-left {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .publish-date {
-    font-weight: 500;
-  }
-
-  .publish-date::after {
-    content: "•";
-    margin-left: 0.75rem;
-  }
-
-  .reading-time {
-    color: var(--text-tertiary, #999);
-  }
-
-  .topic-badge {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: var(--bg-tertiary, #f5f5f5);
-    color: var(--text-primary, #000);
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Article Body - Prose Styling */
-  .article-body {
-    padding: 3rem 0;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--text-primary, #000);
-  }
-
-  .prose-wrapper h2 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin: 2.5rem 0 1.25rem 0;
-    line-height: 1.3;
-    color: var(--text-primary, #000);
-    letter-spacing: -0.3px;
-  }
-
-  .prose-wrapper h3 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin: 2rem 0 1rem 0;
-    line-height: 1.4;
-    color: var(--text-primary, #000);
-  }
-
-  .prose-wrapper p {
-    margin: 1.5rem 0;
-    color: var(--text-primary, #000);
-  }
-
-  .prose-wrapper a {
-    color: #0066cc;
-    text-decoration: none;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(0, 102, 204, 0.3);
-    transition: all 0.2s ease;
-  }
-
-  .prose-wrapper a:hover {
-    border-bottom-color: #0066cc;
-    background-color: rgba(0, 102, 204, 0.05);
-  }
-
-  .prose-wrapper ul,
-  .prose-wrapper ol {
-    margin: 1.5rem 0;
-    padding-left: 2rem;
-  }
-
-  .prose-wrapper li {
-    margin: 0.75rem 0;
-    line-height: 1.8;
-  }
-
-  .prose-wrapper blockquote {
-    border-left: 4px solid var(--border-color, #e5e5e5);
-    padding: 1rem 0 1rem 1.5rem;
-    margin: 2rem 0;
-    font-style: italic;
-    color: var(--text-secondary, #666);
-    background-color: var(--bg-secondary, #fafafa);
-  }
-
-  .prose-wrapper code {
-    background-color: var(--bg-secondary, #f5f5f5);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-family: 'Monaco', 'Courier New', monospace;
-    font-size: 0.95em;
-    color: var(--text-primary, #000);
-  }
-
-  .prose-wrapper pre {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-    padding: 1.5rem;
-    border-radius: 8px;
-    overflow-x: auto;
-    margin: 2rem 0;
-  }
-
-  .prose-wrapper pre code {
-    background-color: transparent;
-    padding: 0;
-    color: inherit;
-  }
-
-  .prose-wrapper table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    border: 1px solid var(--border-color, #e5e5e5);
-  }
-
-  .prose-wrapper th,
-  .prose-wrapper td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color, #e5e5e5);
-  }
-
-  .prose-wrapper th {
-    background-color: var(--bg-tertiary, #f5f5f5);
-    font-weight: 600;
-  }
-
-  .prose-wrapper img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin: 2rem 0;
-    display: block;
-  }
-
-  /* Article Footer */
-  .article-footer {
-    padding: 3rem 0;
-    border-top: 1px solid var(--border-color, #e5e5e5);
-    border-bottom: 1px solid var(--border-color, #e5e5e5);
-  }
-
-  .footer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .author-section {
-    padding: 0;
-  }
-
-  .author-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem 0;
-    color: var(--text-primary, #000);
-  }
-
-  .author-bio {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-secondary, #666);
-    margin: 0;
-  }
-
-  .tags-section {
-    padding-top: 1rem;
-  }
-
-  .tags-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .tag {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: var(--bg-tertiary, #f5f5f5);
-    color: var(--text-secondary, #666);
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 1px solid var(--border-color, #e5e5e5);
-  }
-
-  .tag:hover {
-    background-color: var(--text-primary, #000);
-    color: var(--bg-primary, #fff);
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .article-container {
-      padding: 0 1rem;
-    }
-
-    .article-header {
-      padding: 2.5rem 0 2rem;
-    }
-
-    .article-title {
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-    }
-
-    .article-description {
-      font-size: 1.1rem;
-    }
-
-    .article-body {
-      padding: 2rem 0;
-      font-size: 1rem;
-    }
-
-    .prose-wrapper h2 {
-      font-size: 1.5rem;
-      margin: 2rem 0 1rem 0;
-    }
-
-    .prose-wrapper h3 {
-      font-size: 1.25rem;
-      margin: 1.5rem 0 0.75rem 0;
-    }
-
-    .article-meta {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .meta-left {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
-    }
-
-    .publish-date::after {
-      content: "";
-      margin-left: 0;
-    }
-
-    .article-footer {
-      padding: 2rem 0;
-    }
-  }
-
-  /* Dark Mode Support */
-  :root.dark .article-title,
-  :root.dark .article-body,
-  :root.dark .author-name,
-  :root.dark .prose-wrapper h2,
-  :root.dark .prose-wrapper h3 {
-    color: #ffffff;
-  }
-
-  :root.dark .article-description,
-  :root.dark .author-bio,
-  :root.dark .prose-wrapper a,
-  :root.dark .tag {
-    color: #d0d0d0;
-  }
-
-  :root.dark .article-header,
-  :root.dark .article-footer {
-    border-color: #333333;
-  }
-
-  :root.dark .article-body {
-    color: #e0e0e0;
-  }
-
-  :root.dark .prose-wrapper blockquote {
-    background-color: #1a1a1a;
-    border-left-color: #444444;
-    color: #b0b0b0;
-  }
-
-  :root.dark .prose-wrapper code {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
-  }
-
-  :root.dark .prose-wrapper table {
-    border-color: #333333;
-  }
-
-  :root.dark .prose-wrapper th {
-    background-color: #1a1a1a;
-  }
-
-  :root.dark .prose-wrapper th,
-  :root.dark .prose-wrapper td {
-    border-color: #333333;
-  }
-
-  :root.dark .topic-badge {
-    background-color: #1a1a1a;
-    color: #ffffff;
-  }
-
-  :root.dark .tag {
-    background-color: #1a1a1a;
-    border-color: #333333;
-  }
-
-  :root.dark .tag:hover {
-    background-color: #ffffff;
-    color: #000000;
-  }
-</style>

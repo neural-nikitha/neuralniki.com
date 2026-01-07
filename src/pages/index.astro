@@ -8,61 +8,97 @@ const sortedPosts = allPosts.sort(
 );
 
 const title = 'Neural Niki';
-const description = 'A minimal blog exploring AI, technology, investing, and startup economics.';
+const description = 'A premium publication exploring AI, technology, investing, and startup economics.';
+
+const featuredPost = sortedPosts[0];
+const recentPosts = sortedPosts.slice(1);
 ---
 
 <Base {title} {description}>
-  <!-- Premium Hero Section -->
-  <section class="py-hero">
+  <!-- Hero Section -->
+  <section class="py-hero" style="background: var(--bg-secondary);">
     <div class="container">
-      <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-        <h1 style="margin: 0 0 1.5rem 0; font-size: clamp(2.5rem, 8vw, 4.5rem);">
-          Essays on <span class="text-accent">AI, investing, and technology</span>
+      <div style="max-width: 720px; margin: 0 auto; text-align: center;">
+        <h1 style="margin: 0 0 1.5rem 0; font-size: clamp(2.5rem, 6vw, 4rem); letter-spacing: -0.03em;">
+          Essays on AI, investing & technology
         </h1>
-        <p style="margin: 0; font-size: 1.25rem; color: var(--text-secondary); line-height: 1.8;">
-          Deep analysis without the hype. Straight insights on artificial intelligence, startup economics, and the future of work.
+        <p style="margin: 0; font-size: 1.25rem; color: var(--text-tertiary); line-height: 1.7;">
+          Thoughtful analysis without the hype. Deep dives into artificial intelligence, startup economics, and the forces shaping our digital future.
         </p>
-        
-        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-          <a href="/posts" class="btn btn-primary">Read Articles</a>
-          <a href="/about" class="btn btn-secondary">About Me</a>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- Latest Articles -->
-  <section class="py-section">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 3rem;">
-        <h2 style="margin: 0 0 0.5rem 0;">Latest Articles</h2>
-        <p style="margin: 0; color: var(--text-secondary); font-size: 1.05rem;">
-          Fresh perspectives on technology and markets
-        </p>
+  <!-- Featured Article -->
+  {featuredPost && (
+    <section class="py-section">
+      <div class="container">
+        <a href={`/posts/${featuredPost.slug}`} class="featured-article" style="text-decoration: none; display: grid;">
+          {featuredPost.data.heroImage && (
+            <div class="article-card-image">
+              <img src={featuredPost.data.heroImage} alt={featuredPost.data.title} loading="eager" />
+            </div>
+          )}
+          
+          <div class="article-card-content">
+            <span class="badge" style="margin-bottom: 1rem;">
+              Featured
+            </span>
+            
+            <h2 class="article-card-title" style="font-size: 1.75rem; margin-bottom: 1rem;">
+              {featuredPost.data.title}
+            </h2>
+            
+            <p class="article-card-description" style="-webkit-line-clamp: 4;">
+              {featuredPost.data.description}
+            </p>
+            
+            <div style="margin-top: auto; display: flex; align-items: center; gap: 1rem;">
+              <time style="font-size: 0.875rem; color: var(--text-tertiary);">
+                {featuredPost.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <span style="color: var(--text-muted);">·</span>
+              <span style="font-size: 0.875rem; color: var(--text-tertiary);">
+                {featuredPost.data.reading_time} min read
+              </span>
+            </div>
+            
+            <div class="article-card-read">
+              Read Full Article →
+            </div>
+          </div>
+        </a>
       </div>
+    </section>
+  )}
 
-      {sortedPosts.length === 0 ? (
-        <div style="text-align: center; padding: 2rem;">
-          <p style="color: var(--text-secondary); font-size: 1.1rem;">
-            No posts published yet.
-          </p>
-        </div>
-      ) : (
-        <div class="grid-3">
-          {sortedPosts.slice(0, 6).map((post) => (
+  <!-- More Articles -->
+  {recentPosts.length > 0 && (
+    <section class="py-section" style="background: var(--bg-secondary);">
+      <div class="container">
+        <h2 style="margin: 0 0 2.5rem 0; font-size: 1.5rem;">
+          More Articles
+        </h2>
+
+        <div class="grid-2">
+          {recentPosts.map((post) => (
             <a href={`/posts/${post.slug}`} class="article-card" style="text-decoration: none;">
               {post.data.heroImage && (
                 <div class="article-card-image">
-                  <img src={post.data.heroImage} alt={post.data.title} />
+                  <img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
                 </div>
               )}
               
               <div class="article-card-content">
                 <div class="article-card-meta">
-                  <span class="badge" style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.8rem;">
+                  <span class="badge">
                     {post.data.topic}
                   </span>
-                  <span style="color: var(--text-tertiary); font-size: 0.9rem;">
+                  <span style="color: var(--text-tertiary); font-size: 0.875rem;">
                     {post.data.reading_time} min
                   </span>
                 </div>
@@ -83,7 +119,7 @@ const description = 'A minimal blog exploring AI, technology, investing, and sta
                       day: 'numeric',
                     })}
                   </time>
-                  <div class="article-card-read" style="margin-top: 1rem;">
+                  <div class="article-card-read">
                     Read Article →
                   </div>
                 </div>
@@ -91,19 +127,16 @@ const description = 'A minimal blog exploring AI, technology, investing, and sta
             </a>
           ))}
         </div>
-      )}
+      </div>
+    </section>
+  )}
 
-      {sortedPosts.length > 6 && (
-        <div style="text-align: center; margin-top: 3rem;">
-          <a href="/posts" class="btn btn-secondary">View All Articles</a>
-        </div>
-      )}
+  <!-- AdSense Ready Slot -->
+  <section class="py-section">
+    <div class="container">
+      <div class="ad-slot ad-slot-horizontal">
+        Advertisement
+      </div>
     </div>
   </section>
 </Base>
-
-<style is:global>
-  a:hover {
-    color: var(--accent-hover) !important;
-  }
-</style>

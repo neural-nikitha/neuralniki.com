@@ -3,23 +3,20 @@ import ThemeToggle from './ThemeToggle.astro';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/posts', label: 'Blog' },
+  { href: '/posts', label: 'Articles' },
   { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 glass border-b" style="border-color: var(--border-primary);">
-  <div class="container-blog h-16 flex items-center justify-between">
+<header class="sticky top-0 z-50 glass">
+  <div class="container h-[72px] flex items-center justify-between">
     <!-- Logo -->
-    <a 
-      href="/" 
-      class="text-xl font-bold tracking-tight transition-colors"
-      style="color: var(--text-primary);"
-    >
-      <span class="gradient-text">NEURAL</span> NIKI
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="text-lg font-bold tracking-tight" style="color: var(--text-primary);">
+        NEURAL NIKI
+      </span>
     </a>
 
     <!-- Desktop Navigation -->
@@ -28,15 +25,21 @@ const currentPath = Astro.url.pathname;
         <a 
           href={link.href}
           class:list={[
-            "text-sm font-medium transition-colors",
-            currentPath === link.href 
-              ? "text-purple-600 dark:text-purple-400" 
-              : "text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
+            "text-sm font-medium transition-all duration-200 relative py-1",
+            currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+              ? "font-semibold" 
+              : "opacity-70 hover:opacity-100"
           ]}
+          style={`color: var(--text-primary);`}
         >
           {link.label}
+          {(currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) && (
+            <span class="absolute bottom-0 left-0 w-full h-0.5 rounded-full" style="background: var(--text-primary);"></span>
+          )}
         </a>
       ))}
+      
+      <div class="w-px h-5 mx-2" style="background: var(--border-color);"></div>
       
       <ThemeToggle />
     </nav>
@@ -48,17 +51,17 @@ const currentPath = Astro.url.pathname;
       <button
         id="mobile-menu-btn"
         type="button"
-        class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors"
+        class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors hover:opacity-80"
         style="background-color: var(--bg-tertiary);"
         aria-label="Toggle menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
-        <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--text-primary);">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--text-primary);">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
@@ -68,19 +71,20 @@ const currentPath = Astro.url.pathname;
   <nav 
     id="mobile-menu" 
     class="hidden md:hidden border-t overflow-hidden transition-all duration-300"
-    style="border-color: var(--border-primary); background-color: var(--bg-primary);"
+    style="border-color: var(--border-color); background-color: var(--bg-primary);"
     aria-label="Mobile navigation"
   >
-    <div class="container-blog py-4 flex flex-col gap-1">
+    <div class="container py-4 flex flex-col gap-1">
       {navLinks.map(link => (
         <a 
           href={link.href}
           class:list={[
             "py-3 px-4 rounded-lg text-sm font-medium transition-colors",
-            currentPath === link.href 
-              ? "bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400" 
-              : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+              ? "font-semibold" 
+              : "opacity-70"
           ]}
+          style={`color: var(--text-primary); background-color: ${currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) ? 'var(--bg-tertiary)' : 'transparent'};`}
         >
           {link.label}
         </a>
@@ -128,20 +132,15 @@ const currentPath = Astro.url.pathname;
     
     btn.addEventListener('click', toggleMenu);
     
-    // Close menu when clicking a link
     menu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
     
-    // Close menu on escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
   }
   
-  // Initialize on load
   initMobileMenu();
-  
-  // Re-initialize after Astro page transitions
   document.addEventListener('astro:after-swap', initMobileMenu);
 </script>
